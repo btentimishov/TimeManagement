@@ -1,3 +1,9 @@
 <resources>
-    <string name="app_name">TestFragment</string>
+    <string name="app_name">ToDo Manager</string>
+    <string name="create_note">Create note</string>
+    <string name="enter_title">Введите название</string>
+    <string name="enter_description">Добавьте описание</string>
+    <string name="do_time">Время выполнения</string>
+    <string name="save">Сохранить</string>
+    <string name="delete_note">Delete</string>
 </resources>

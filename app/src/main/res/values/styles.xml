@@ -8,4 +8,24 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="CustomTextLayout" parent="TextAppearance.AppCompat">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:padding">@dimen/margin_8</item>
+        <item name="android:textSize">@dimen/text_size</item>
+    </style>
+
+    <style name="BTN" parent="android:Widget.Button">
+        <item name="android:layout_height">@dimen/size_40</item>
+        <item name="android:layout_width">@dimen/size_300</item>
+        <item name="android:background">@drawable/round_btn</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:textSize">@dimen/text_size</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <dimen name="size_40">40dp</dimen>
+    <dimen name="size_300">300dp</dimen>
 </resources>
