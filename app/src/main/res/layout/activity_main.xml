@@ -6,17 +6,30 @@
     android:layout_height="match_parent"
     tools:context="baktiyar.com.testfragment.ui.notes.NotesActivity">
 
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/refreshNotes"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rvNoteList"
+        <Button
+            android:layout_margin="@dimen/margin_8"
+            android:text="@string/begin_test"
+            style="@style/BTN"
+            android:id="@+id/btnBeginTest"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/refreshNotes"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-        </android.support.v7.widget.RecyclerView>
-    </android.support.v4.widget.SwipeRefreshLayout>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rvNoteList"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </android.support.v4.widget.SwipeRefreshLayout>
+    </LinearLayout>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fabAddNote"
@@ -24,8 +37,8 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"
         android:layout_marginEnd="32dp"
-        app:fabSize="normal"
         android:src="@drawable/ic_add"
+        app:fabSize="normal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 </android.support.constraint.ConstraintLayout>

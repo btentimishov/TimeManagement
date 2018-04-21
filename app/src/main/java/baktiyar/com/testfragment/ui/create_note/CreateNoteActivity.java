@@ -1,19 +1,23 @@
 package baktiyar.com.testfragment.ui.create_note;
 
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import baktiyar.com.testfragment.R;
 import baktiyar.com.testfragment.model.Note;
 import baktiyar.com.testfragment.model.database.DatabaseHelper;
+import baktiyar.com.testfragment.utils.DatePickerFragment;
 
 public class CreateNoteActivity extends AppCompatActivity implements View.OnClickListener {
     private TextInputLayout mEtTitle;
     private TextInputLayout mEtDescription;
+    private TextView mTvDoTime;
     private Button mBtnSaveNote;
     private Note note;
 
@@ -45,7 +49,10 @@ public class CreateNoteActivity extends AppCompatActivity implements View.OnClic
         mEtTitle = findViewById(R.id.etNoteTitle);
         mEtDescription = findViewById(R.id.etNoteDescription);
         mBtnSaveNote = findViewById(R.id.btnSaveNote);
+        mTvDoTime = findViewById(R.id.tvDoTime);
         mBtnSaveNote.setOnClickListener(this);
+        mTvDoTime.setOnClickListener(this);
+
     }
 
     private void initToolbar() {
@@ -56,7 +63,7 @@ public class CreateNoteActivity extends AppCompatActivity implements View.OnClic
     private void initNote(Note note) {
         note.setTitle(mEtTitle.getEditText().getText().toString());
         note.setDescription(mEtDescription.getEditText().getText().toString());
-        note.setDoTime("vfdvdfvdfv");
+        note.setDoTime(mTvDoTime.getText().toString());
     }
 
     @Override
@@ -73,6 +80,13 @@ public class CreateNoteActivity extends AppCompatActivity implements View.OnClic
         if (v == mBtnSaveNote) {
             saveData();
             onBackPressed();
+        } else if (v == mTvDoTime){
+            showDatePickerDialog();
         }
+    }
+
+    public void showDatePickerDialog() {
+        DatePickerFragment newFragment = new DatePickerFragment();
+        newFragment.show(getSupportFragmentManager(), "datePicker");
     }
 }

@@ -72,7 +72,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/start_timeTxt"
+            android:id="@+id/tvDoTime"
             style="@style/CustomTextLayout"
             android:drawableRight="@drawable/ic_arrow"
             android:gravity="center_vertical"

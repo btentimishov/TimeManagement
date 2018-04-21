@@ -6,4 +6,32 @@
     <string name="do_time">Время выполнения</string>
     <string name="save">Сохранить</string>
     <string name="delete_note">Delete</string>
+    <string name="begin_test">Begin test</string>
+    <string name="always_answer">Always</string>
+    <string name="frequently_answer">Frequently</string>
+    <string name="sometimes_answer">Sometimes</string>
+    <string name="infrequently_answer">Infrequently</string>
+    <string name="never_answer">Never</string>
+    <string name="next">Next</string>
+    <string name="quiz_title">Quiz Test</string>
+    <string-array name="questions">
+        <item>1. Do you make a list of the things you have to do each day?</item>
+        <item>2. Do you plan your day before you start it?</item>
+        <item>3. Do you make a schedule of the activities you have to do on work days?</item>
+     <!--   <item>4. Do you write a set of goals for yourself for each day?</item>
+        <item>5. Do you spend time each day planning?</item>
+        <item>6. Do you have a clear idea of what you want to accomplish during the next week?</item>
+        <item>7. Do you set and honor priorities?</item>
+        <item>8. Do you often find yourself doing things which interfere with your schoolwork simply because you hate to say "No" to people? *</item>
+        <item>9. Do you feel you are in charge of your own time, by and large? </item>
+        <item>10. On an average class day do you spend more time with personal grooming than doing schoolwork?</item>
+        <item>11. Do you believe that there is room for improvement in the way you manage your time? * </item>
+        <item>12. Do you make constructive use of your time?</item>
+        <item>13. Do you continue unprofitable routines or activities?</item>
+        <item>14. Do you usually keep your desk clear of everything other than what you are currently working on? </item>
+        <item>15. Do you have a set of goals for the entire quarter? </item>
+        <item>16. The night before a major assignment is due, are you usually still working on it? *</item>
+        <item>17. When you have several things to do, do you think it is best to do a little bit of work on each one? </item>
+        <item>18. Do you regularly review your class notes, even when a test is not imminent?</item>-->
+    </string-array>
 </resources>

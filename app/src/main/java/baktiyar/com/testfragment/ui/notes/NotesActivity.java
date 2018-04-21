@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -18,6 +19,7 @@ import baktiyar.com.testfragment.model.Note;
 import baktiyar.com.testfragment.model.database.DatabaseHelper;
 import baktiyar.com.testfragment.ui.create_note.CreateNoteActivity;
 import baktiyar.com.testfragment.ui.detailes.DetailedNoteActivity;
+import baktiyar.com.testfragment.ui.quiz.QuizActivity;
 
 public class NotesActivity extends AppCompatActivity implements View.OnClickListener, NotesContract.View, NotesAdapter.OnClickListener {
 
@@ -25,6 +27,7 @@ public class NotesActivity extends AppCompatActivity implements View.OnClickList
     private RecyclerView mRvNoteList;
     private NotesAdapter mNotesAdapter;
     private FloatingActionButton mFabAddNote;
+    private Button mBtnBeginTest;
     private ArrayList<Note> mNoteList;
     private NotesPresenter mPresenter;
     private DatabaseHelper mDbHelper;
@@ -38,7 +41,6 @@ public class NotesActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void init() {
-
         initActivity();
         initRecyclerView();
         initPresenter();
@@ -47,7 +49,9 @@ public class NotesActivity extends AppCompatActivity implements View.OnClickList
     private void initActivity() {
         mRvNoteList = findViewById(R.id.rvNoteList);
         mFabAddNote = findViewById(R.id.fabAddNote);
+        mBtnBeginTest = findViewById(R.id.btnBeginTest);
         mFabAddNote.setOnClickListener(this);
+        mBtnBeginTest.setOnClickListener(this);
     }
 
     private void initPresenter() {
@@ -65,15 +69,15 @@ public class NotesActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onClick(View v) {
         if (v == mFabAddNote) {
-            goToActivity(CreateNoteActivity.class);
+            Intent intent = new Intent(this, CreateNoteActivity.class);
+            startActivity(intent);
+        } else if (v == mBtnBeginTest){
+            Intent intent = new Intent(this, QuizActivity.class);
+            startActivity(intent);
         }
     }
 
 
-    private void goToActivity(Class o) {
-        Intent intent = new Intent(this, o);
-        startActivity(intent);
-    }
 
     @Override
     public void onGetNotesSuccess(ArrayList<Note> notes) {
@@ -89,13 +93,6 @@ public class NotesActivity extends AppCompatActivity implements View.OnClickList
         startActivity(intent);
     }
 
-    void testInitListLaterBeDeleted(ArrayList<Note> notes) {
-        notes.add(new Note(1, "Hello", "", ""));
-        notes.add(new Note(2, "Hi", "", ""));
-        notes.add(new Note(3, "Hey", "", ""));
-        notes.add(new Note(4, "vndfjkvnk", "", ""));
-        notes.add(new Note(5, "bdfnjbdf", "", ""));
-    }
     private void updateNotes(){
         mPresenter.getNotes();
 
