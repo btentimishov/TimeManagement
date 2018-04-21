@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -93,9 +94,6 @@ public class CreateNoteActivity extends AppCompatActivity implements View.OnClic
     public void showDatePickerDialog() {
         DatePickerFragment newFragment = new DatePickerFragment();
         newFragment.show(getSupportFragmentManager(), "datePicker");
-
-        String date = newFragment.giveDate();
-        mTvDoTime.setText(date);
     }
 
     public Boolean isFilled() {

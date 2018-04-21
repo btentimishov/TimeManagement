@@ -5,8 +5,11 @@ import android.app.Dialog;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.widget.DatePicker;
+import android.widget.TextView;
 
 import java.util.Calendar;
+
+import baktiyar.com.testfragment.R;
 
 /**
  * Created by admin on 21.04.2018.
@@ -14,28 +17,21 @@ import java.util.Calendar;
 
 public class DatePickerFragment extends DialogFragment
         implements DatePickerDialog.OnDateSetListener {
-    final Calendar c = Calendar.getInstance();
-    int year = c.get(Calendar.YEAR);
-    int month = c.get(Calendar.MONTH);
-    int day = c.get(Calendar.DAY_OF_MONTH);
-    private String date;
+
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        // Use the current date as the default date in the picker
+        final Calendar c = Calendar.getInstance();
+        int year = c.get(Calendar.YEAR);
+        int month = c.get(Calendar.MONTH);
+        int day = c.get(Calendar.DAY_OF_MONTH);
 
-
-        // Create a new instance of DatePickerDialog and return it
         return new DatePickerDialog(getActivity(), this, year, month, day);
     }
 
     public void onDateSet(DatePicker view, int year, int month, int day) {
-        date = day + "/" + month + "/" + year;
-        // Do something with the date chosen by the user
-    }
-
-    public String giveDate() {
-        return date;
+        TextView tvDoTime = getActivity().findViewById(R.id.tvDoTime);
+        tvDoTime.setText(view.getDayOfMonth() + "/" + view.getMonth() + "/" + view.getYear());
     }
 
 
