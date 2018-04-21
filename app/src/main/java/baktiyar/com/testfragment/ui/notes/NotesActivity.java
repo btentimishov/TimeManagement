@@ -1,6 +1,5 @@
 package baktiyar.com.testfragment.ui.notes;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -9,10 +8,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
+import android.widget.ImageView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import baktiyar.com.testfragment.R;
 import baktiyar.com.testfragment.model.Note;
@@ -24,10 +22,13 @@ import baktiyar.com.testfragment.ui.quiz.QuizActivity;
 public class NotesActivity extends AppCompatActivity implements View.OnClickListener, NotesContract.View, NotesAdapter.OnClickListener {
 
     public static final String PARCED_NOTE = "parced note";
+
     private RecyclerView mRvNoteList;
-    private NotesAdapter mNotesAdapter;
     private FloatingActionButton mFabAddNote;
     private Button mBtnBeginTest;
+    private ImageView mIvNoData;
+
+    private NotesAdapter mNotesAdapter;
     private ArrayList<Note> mNoteList;
     private NotesPresenter mPresenter;
     private DatabaseHelper mDbHelper;
@@ -35,7 +36,7 @@ public class NotesActivity extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_notes);
         mDbHelper = new DatabaseHelper(this);
         init();
     }
@@ -50,13 +51,14 @@ public class NotesActivity extends AppCompatActivity implements View.OnClickList
         mRvNoteList = findViewById(R.id.rvNoteList);
         mFabAddNote = findViewById(R.id.fabAddNote);
         mBtnBeginTest = findViewById(R.id.btnBeginTest);
+        mIvNoData = findViewById(R.id.ivNoData);
         mFabAddNote.setOnClickListener(this);
         mBtnBeginTest.setOnClickListener(this);
     }
 
     private void initPresenter() {
         mPresenter = new NotesPresenter(this, mDbHelper);
-        mPresenter.getNotes();
+        updateNotes();
     }
 
     private void initRecyclerView() {
@@ -64,6 +66,7 @@ public class NotesActivity extends AppCompatActivity implements View.OnClickList
         mRvNoteList.setLayoutManager(new LinearLayoutManager(this));
         mNotesAdapter = new NotesAdapter(mNoteList, this);
         mRvNoteList.setAdapter(mNotesAdapter);
+
     }
 
     @Override
@@ -76,7 +79,6 @@ public class NotesActivity extends AppCompatActivity implements View.OnClickList
             startActivity(intent);
         }
     }
-
 
 
     @Override
@@ -95,13 +97,22 @@ public class NotesActivity extends AppCompatActivity implements View.OnClickList
 
     private void updateNotes(){
         mPresenter.getNotes();
-
+        checkList();
     }
     @Override
     protected void onResume() {
         super.onResume();
         updateNotes();
-        Toast.makeText(this, "OnResume", Toast.LENGTH_SHORT).show();
+    }
 
+    private void checkList(){
+        if (mNoteList.size() == 0){
+            mIvNoData.setVisibility(View.VISIBLE);
+            mRvNoteList.setVisibility(View.GONE);
+        }
+        else {
+            mIvNoData.setVisibility(View.GONE);
+            mRvNoteList.setVisibility(View.VISIBLE);
+        }
     }
 }

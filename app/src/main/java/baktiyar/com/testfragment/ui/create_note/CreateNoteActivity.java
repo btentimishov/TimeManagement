@@ -8,6 +8,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.Objects;
 
 import baktiyar.com.testfragment.R;
 import baktiyar.com.testfragment.model.Note;
@@ -28,8 +31,6 @@ public class CreateNoteActivity extends AppCompatActivity implements View.OnClic
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_note);
         mDbHelper = new DatabaseHelper(this);
-
-
         init();
     }
 
@@ -40,9 +41,14 @@ public class CreateNoteActivity extends AppCompatActivity implements View.OnClic
     }
 
     private void saveData() {
-        note = new Note();
-        initNote(note);
-        mDbHelper.insertNote(note);
+        if (isFilled()) {
+            note = new Note();
+            initNote(note);
+            mDbHelper.insertNote(note);
+            onBackPressed();
+        } else {
+            Toast.makeText(this, "Type title", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void initActivity() {
@@ -79,8 +85,7 @@ public class CreateNoteActivity extends AppCompatActivity implements View.OnClic
     public void onClick(View v) {
         if (v == mBtnSaveNote) {
             saveData();
-            onBackPressed();
-        } else if (v == mTvDoTime){
+        } else if (v == mTvDoTime) {
             showDatePickerDialog();
         }
     }
@@ -88,5 +93,12 @@ public class CreateNoteActivity extends AppCompatActivity implements View.OnClic
     public void showDatePickerDialog() {
         DatePickerFragment newFragment = new DatePickerFragment();
         newFragment.show(getSupportFragmentManager(), "datePicker");
+
+        String date = newFragment.giveDate();
+        mTvDoTime.setText(date);
+    }
+
+    public Boolean isFilled() {
+        return !Objects.equals(mEtTitle.getEditText().getText().toString(), "");
     }
 }

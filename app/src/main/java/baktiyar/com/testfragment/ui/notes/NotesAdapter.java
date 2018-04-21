@@ -4,10 +4,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Objects;
 
 import baktiyar.com.testfragment.R;
 import baktiyar.com.testfragment.model.Note;
@@ -55,11 +56,13 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteHolder> 
     public class NoteHolder extends RecyclerView.ViewHolder {
         public TextView tvNoteTitle;
         public TextView tvNoteDoTime;
+        public LinearLayout clockLayout;
 
         public NoteHolder(View itemView) {
             super(itemView);
             tvNoteTitle = itemView.findViewById(R.id.tvNoteTitle);
             tvNoteDoTime = itemView.findViewById(R.id.tvNoteDoTime);
+            clockLayout = itemView.findViewById(R.id.clockLayout);
         }
 
         public void bindNote(final Note note) {
@@ -69,8 +72,13 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteHolder> 
                 public void onClick(View v) {
                     mListener.onClick(note);
                 }
+
             });
-            tvNoteDoTime.setText(note.getDoTime());
+            if (Objects.equals(note.getDoTime(), "")) {
+                clockLayout.setVisibility(View.GONE);
+            } else {
+                tvNoteDoTime.setText(note.getDoTime());
+            }
         }
     }
 }

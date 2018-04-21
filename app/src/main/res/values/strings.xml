@@ -1,12 +1,12 @@
 <resources>
     <string name="app_name">ToDo Manager</string>
     <string name="create_note">Create note</string>
-    <string name="enter_title">Введите название</string>
-    <string name="enter_description">Добавьте описание</string>
-    <string name="do_time">Время выполнения</string>
-    <string name="save">Сохранить</string>
+    <string name="enter_title">Type title</string>
+    <string name="enter_description">Add description</string>
+    <string name="do_time">Doing time</string>
+    <string name="save">Save</string>
     <string name="delete_note">Delete</string>
-    <string name="begin_test">Begin test</string>
+    <string name="begin_test">Try ToDo test</string>
     <string name="always_answer">Always</string>
     <string name="frequently_answer">Frequently</string>
     <string name="sometimes_answer">Sometimes</string>
@@ -14,11 +14,13 @@
     <string name="never_answer">Never</string>
     <string name="next">Next</string>
     <string name="quiz_title">Quiz Test</string>
+    <string name="todo">ToDo: </string>
+    <string name="until">Until: </string>
     <string-array name="questions">
         <item>1. Do you make a list of the things you have to do each day?</item>
         <item>2. Do you plan your day before you start it?</item>
         <item>3. Do you make a schedule of the activities you have to do on work days?</item>
-     <!--   <item>4. Do you write a set of goals for yourself for each day?</item>
+        <item>4. Do you write a set of goals for yourself for each day?</item>
         <item>5. Do you spend time each day planning?</item>
         <item>6. Do you have a clear idea of what you want to accomplish during the next week?</item>
         <item>7. Do you set and honor priorities?</item>
@@ -32,6 +34,6 @@
         <item>15. Do you have a set of goals for the entire quarter? </item>
         <item>16. The night before a major assignment is due, are you usually still working on it? *</item>
         <item>17. When you have several things to do, do you think it is best to do a little bit of work on each one? </item>
-        <item>18. Do you regularly review your class notes, even when a test is not imminent?</item>-->
+        <item>18. Do you regularly review your class notes, even when a test is not imminent?</item>
     </string-array>
 </resources>

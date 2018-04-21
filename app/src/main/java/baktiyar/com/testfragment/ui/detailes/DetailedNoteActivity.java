@@ -1,5 +1,7 @@
 package baktiyar.com.testfragment.ui.detailes;
 
+import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -59,13 +61,35 @@ public class DetailedNoteActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == android.R.id.home){
+        if (id == android.R.id.home) {
             onBackPressed();
-        } else if (id == R.id.menuItemDeleteNote){
-            deleteNote();
+        } else if (id == R.id.menuItemDeleteNote) {
+            showDeleteNoteDialog();
         }
-
         return super.onOptionsItemSelected(item);
+    }
+
+    private void showDeleteNoteDialog() {
+        final DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which) {
+                    case DialogInterface.BUTTON_POSITIVE:
+                        deleteNote();
+                        break;
+
+                    case DialogInterface.BUTTON_NEGATIVE:
+                        dialog.cancel();
+                        break;
+                }
+            }
+        };
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Are you sure to delete \"" + note.getTitle() + "\"?")
+               .setPositiveButton("Yes", dialogClickListener)
+               .setNegativeButton("No", dialogClickListener)
+               .show();
     }
 
     private void deleteNote() {
