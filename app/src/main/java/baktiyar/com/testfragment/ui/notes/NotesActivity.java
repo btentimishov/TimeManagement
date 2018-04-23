@@ -7,11 +7,13 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import java.util.ArrayList;
 
@@ -28,8 +30,8 @@ public class NotesActivity extends AppCompatActivity implements View.OnClickList
 
     private RecyclerView mRvNoteList;
     private FloatingActionButton mFabAddNote;
+    private LinearLayout mNoDataLayout;
     private Button mBtnBeginTest;
-    private ImageView mIvNoData;
 
     private NotesAdapter mNotesAdapter;
     private ArrayList<Note> mNoteList;
@@ -54,7 +56,8 @@ public class NotesActivity extends AppCompatActivity implements View.OnClickList
         mRvNoteList = findViewById(R.id.rvNoteList);
         mFabAddNote = findViewById(R.id.fabAddNote);
         mBtnBeginTest = findViewById(R.id.btnBeginTest);
-        mIvNoData = findViewById(R.id.ivNoData);
+
+        mNoDataLayout = findViewById(R.id.noData);
         mFabAddNote.setOnClickListener(this);
         mBtnBeginTest.setOnClickListener(this);
     }
@@ -90,10 +93,12 @@ public class NotesActivity extends AppCompatActivity implements View.OnClickList
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onGetNotesSuccess(ArrayList<Note> notes) {
         mNoteList = notes;
         mNotesAdapter.setList(mNoteList);
+        mNotesAdapter.notifyDataSetChanged();
         initToolbar();
     }
 
@@ -116,11 +121,11 @@ public class NotesActivity extends AppCompatActivity implements View.OnClickList
 
     private void checkList(){
         if (mNoteList.size() == 0){
-            mIvNoData.setVisibility(View.VISIBLE);
+            mNoDataLayout.setVisibility(View.VISIBLE);
             mRvNoteList.setVisibility(View.GONE);
         }
         else {
-            mIvNoData.setVisibility(View.GONE);
+            mNoDataLayout.setVisibility(View.GONE);
             mRvNoteList.setVisibility(View.VISIBLE);
         }
     }

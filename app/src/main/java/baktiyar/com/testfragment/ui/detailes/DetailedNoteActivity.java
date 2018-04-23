@@ -21,9 +21,7 @@ import baktiyar.com.testfragment.ui.notes.NotesActivity;
 public class DetailedNoteActivity extends AppCompatActivity {
     private Note note = new Note();
     private DatabaseHelper mDbHelper;
-    private TextView tvTitle;
-    private TextView tvDesc;
-    private TextView tvDoTime;
+    private TextView tvTitle, tvDesc, tvDoDate, tvDoTime;
     private LinearLayout descLayout, clockLayout;
 
     @Override
@@ -49,7 +47,9 @@ public class DetailedNoteActivity extends AppCompatActivity {
     private void initActivity() {
         tvTitle = findViewById(R.id.tvDetailedNoteTitle);
         tvDesc = findViewById(R.id.tvDetailedNoteDescription);
+        tvDoDate = findViewById(R.id.tvDetailedNoteDoDate);
         tvDoTime = findViewById(R.id.tvDetailedNoteDoTime);
+
         tvTitle.setText(note.getTitle());
         clockLayout = findViewById(R.id.detailedClockLayout);
         descLayout = findViewById(R.id.detailedDescLayout);
@@ -58,10 +58,11 @@ public class DetailedNoteActivity extends AppCompatActivity {
         } else {
             descLayout.setVisibility(View.GONE);
         }
-        if (!Objects.equals(note.getDoTime(), "")) {
-            tvDoTime.setText(note.getDoTime());
-        } else {
+        if (Objects.equals(note.getDoDate(), "") & Objects.equals(note.getDoTime(), "")) {
             clockLayout.setVisibility(View.GONE);
+        } else {
+            tvDoDate.setText(note.getDoDate());
+            tvDoTime.setText(note.getDoTime());
         }
     }
 
@@ -82,6 +83,7 @@ public class DetailedNoteActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
 
     private void showDeleteNoteDialog() {
         final DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {

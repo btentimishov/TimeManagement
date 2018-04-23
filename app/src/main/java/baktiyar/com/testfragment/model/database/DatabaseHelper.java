@@ -7,7 +7,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import baktiyar.com.testfragment.model.Note;
 
@@ -39,6 +38,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(Note.COLUMN_TITLE, note.getTitle());
         values.put(Note.COLUMN_DESCRIPTION, note.getDescription());
+        values.put(Note.COLUMN_DO_DATE, note.getDoDate());
         values.put(Note.COLUMN_DO_TIME, note.getDoTime());
         db.insert(Note.TABLE_NAME, null, values);
         db.close();
@@ -59,6 +59,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 note.setId(cursor.getInt(cursor.getColumnIndex(Note.COLUMN_ID)));
                 note.setTitle(cursor.getString(cursor.getColumnIndex(Note.COLUMN_TITLE)));
                 note.setDescription(cursor.getString(cursor.getColumnIndex(Note.COLUMN_DESCRIPTION)));
+                note.setDoDate(cursor.getString(cursor.getColumnIndex(Note.COLUMN_DO_DATE)));
                 note.setDoTime(cursor.getString(cursor.getColumnIndex(Note.COLUMN_DO_TIME)));
                 notes.add(note);
             } while (cursor.moveToNext());
@@ -75,4 +76,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
     }
 
+
+    public int updateNote(Note note) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(Note.COLUMN_TITLE, note.getTitle());
+        values.put(Note.COLUMN_DESCRIPTION, note.getDescription());
+        values.put(Note.COLUMN_DO_DATE, note.getDoDate());
+        values.put(Note.COLUMN_DO_TIME, note.getDoTime());
+
+        // updating row
+        return db.update(Note.TABLE_NAME, values, Note.COLUMN_ID + " = ?",
+                new String[]{String.valueOf(note.getId())});
+    }
 }

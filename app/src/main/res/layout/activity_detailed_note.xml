@@ -46,14 +46,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_12"
-        android:gravity="center"
+        android:gravity="center_vertical"
         android:orientation="horizontal">
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingRight="@dimen/margin_8"
-            android:src="@drawable/ic_time" />
+            android:src="@drawable/ic_date" />
 
         <TextView
 
@@ -63,10 +63,18 @@
             android:text="@string/do_until" />
 
         <TextView
-            android:id="@+id/tvDetailedNoteDoTime"
-            android:layout_width="match_parent"
+            android:id="@+id/tvDetailedNoteDoDate"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="@string/create_note" />
+            android:paddingRight="@dimen/margin_8"
+            tools:text="@string/example_date" />
+
+        <TextView
+            android:id="@+id/tvDetailedNoteDoTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="@dimen/margin_8"
+            tools:text="@string/example_time" />
     </LinearLayout>
 
 </LinearLayout>

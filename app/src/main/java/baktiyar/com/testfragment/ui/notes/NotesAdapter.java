@@ -53,19 +53,22 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteHolder> 
         return mNoteList.size();
     }
 
-    public class NoteHolder extends RecyclerView.ViewHolder {
-        public TextView tvNoteTitle;
-        public TextView tvNoteDoTime;
-        public LinearLayout clockLayout;
+    class NoteHolder extends RecyclerView.ViewHolder {
+        TextView tvNoteDoDate;
+        TextView tvNoteDoTime;
+        TextView tvNoteTitle;
 
-        public NoteHolder(View itemView) {
+        LinearLayout clockLayout;
+
+        NoteHolder(View itemView) {
             super(itemView);
             tvNoteTitle = itemView.findViewById(R.id.tvNoteTitle);
+            tvNoteDoDate = itemView.findViewById(R.id.tvNoteDoDate);
             tvNoteDoTime = itemView.findViewById(R.id.tvNoteDoTime);
             clockLayout = itemView.findViewById(R.id.clockLayout);
         }
 
-        public void bindNote(final Note note) {
+        void bindNote(final Note note) {
             tvNoteTitle.setText(note.getTitle());
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -74,9 +77,10 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteHolder> 
                 }
 
             });
-            if (Objects.equals(note.getDoTime(), "")) {
+            if (Objects.equals(note.getDoDate(), "") & Objects.equals(note.getDoTime(), "")) {
                 clockLayout.setVisibility(View.GONE);
             } else {
+                tvNoteDoDate.setText(note.getDoDate());
                 tvNoteDoTime.setText(note.getDoTime());
             }
         }

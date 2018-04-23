@@ -1,13 +1,11 @@
 package baktiyar.com.testfragment.ui.create_note;
 
 import android.support.design.widget.TextInputLayout;
-import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,11 +15,12 @@ import baktiyar.com.testfragment.R;
 import baktiyar.com.testfragment.model.Note;
 import baktiyar.com.testfragment.model.database.DatabaseHelper;
 import baktiyar.com.testfragment.utils.DatePickerFragment;
+import baktiyar.com.testfragment.utils.TimePickerFragment;
 
 public class CreateNoteActivity extends AppCompatActivity implements View.OnClickListener {
     private TextInputLayout mEtTitle;
     private TextInputLayout mEtDescription;
-    private TextView mTvDoTime;
+    private TextView mTvDoDate, mTvDoTime;
     private Button mBtnSaveNote;
     private Note note;
 
@@ -56,9 +55,11 @@ public class CreateNoteActivity extends AppCompatActivity implements View.OnClic
         mEtTitle = findViewById(R.id.etNoteTitle);
         mEtDescription = findViewById(R.id.etNoteDescription);
         mBtnSaveNote = findViewById(R.id.btnSaveNote);
+        mTvDoDate = findViewById(R.id.tvDoDate);
         mTvDoTime = findViewById(R.id.tvDoTime);
-        mBtnSaveNote.setOnClickListener(this);
         mTvDoTime.setOnClickListener(this);
+        mBtnSaveNote.setOnClickListener(this);
+        mTvDoDate.setOnClickListener(this);
 
     }
 
@@ -70,7 +71,9 @@ public class CreateNoteActivity extends AppCompatActivity implements View.OnClic
     private void initNote(Note note) {
         note.setTitle(mEtTitle.getEditText().getText().toString());
         note.setDescription(mEtDescription.getEditText().getText().toString());
+        note.setDoDate(mTvDoDate.getText().toString());
         note.setDoTime(mTvDoTime.getText().toString());
+
     }
 
     @Override
@@ -86,8 +89,10 @@ public class CreateNoteActivity extends AppCompatActivity implements View.OnClic
     public void onClick(View v) {
         if (v == mBtnSaveNote) {
             saveData();
-        } else if (v == mTvDoTime) {
+        } else if (v == mTvDoDate) {
             showDatePickerDialog();
+        } else if (v == mTvDoTime){
+            showTimePickerDialog();
         }
     }
 
@@ -96,7 +101,12 @@ public class CreateNoteActivity extends AppCompatActivity implements View.OnClic
         newFragment.show(getSupportFragmentManager(), "datePicker");
     }
 
+    public void showTimePickerDialog(){
+        TimePickerFragment timePickerFragmen= new TimePickerFragment();
+        timePickerFragmen.show(getSupportFragmentManager(), "timePicker");
+    }
     public Boolean isFilled() {
         return !Objects.equals(mEtTitle.getEditText().getText().toString(), "");
     }
+
 }

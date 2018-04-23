@@ -15,14 +15,54 @@
         android:layout_marginTop="@dimen/margin_12"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/tvDoTime"
-            style="@style/CustomTextLayout"
-            android:drawableRight="@drawable/ic_arrow"
-            android:gravity="center_vertical"
-            android:hint="@string/do_time"
-            android:paddingStart="@dimen/margin_12" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_height="match_parent">
 
+            <LinearLayout
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="@dimen/margin_12"
+                    android:src="@drawable/ic_date" />
+
+                <TextView
+                    android:id="@+id/tvDoDate"
+                    style="@style/CustomTextLayout"
+                    android:drawableRight="@drawable/ic_arrow"
+                    android:gravity="center_vertical"
+                    android:hint="@string/do_date"
+                    android:paddingStart="@dimen/margin_12" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="@dimen/margin_12"
+                    android:src="@drawable/ic_time" />
+
+                <TextView
+                    android:id="@+id/tvDoTime"
+                    style="@style/CustomTextLayout"
+                    android:drawableRight="@drawable/ic_arrow"
+                    android:gravity="center_vertical"
+                    android:hint="@string/do_time"
+                    android:paddingStart="@dimen/margin_12" />
+            </LinearLayout>
+        </LinearLayout>
     </android.support.v7.widget.CardView>
 
     <android.support.v7.widget.CardView

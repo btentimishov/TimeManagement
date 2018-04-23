@@ -69,12 +69,8 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
         else return 0;
     }
 
-    private void unCheckRdBtns() {
-        rdBtnAlways.setChecked(false);
-        rdBtnFrequently.setChecked(false);
-        rdBtnSometimes.setChecked(false);
-        rdBtnInfrequently.setChecked(false);
-        rdBtnNever.setChecked(false);
+    private void clearCheckRdBtns() {
+        rdBtnGroup.clearCheck();
     }
 
     @Override
@@ -86,7 +82,7 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
 
     private void goToNextQuestion() {
         changeQuestion();
-        unCheckRdBtns();
+        clearCheckRdBtns();
     }
 
 
@@ -103,7 +99,7 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
     private void giveResult() {
         rdBtnGroup.setVisibility(View.GONE);
         tvQuizQuestionTitle.setText("Result:");
-        tvQuizQuestion.setText("Your result is : " + score+" from 90 max score");
+        tvQuizQuestion.setText("Your result is : " + score + " from " + myResArrayList.size() * 5 + " max score");
         btnNext.setVisibility(View.GONE);
     }
 
