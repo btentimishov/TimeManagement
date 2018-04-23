@@ -1,6 +1,7 @@
 package baktiyar.com.testfragment.ui.detailes;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,7 +17,9 @@ import java.util.Objects;
 import baktiyar.com.testfragment.R;
 import baktiyar.com.testfragment.model.Note;
 import baktiyar.com.testfragment.model.database.DatabaseHelper;
+import baktiyar.com.testfragment.ui.create_note.CreateNoteActivity;
 import baktiyar.com.testfragment.ui.notes.NotesActivity;
+import baktiyar.com.testfragment.utils.ActionStatus;
 
 public class DetailedNoteActivity extends AppCompatActivity {
     private Note note = new Note();
@@ -80,10 +83,20 @@ public class DetailedNoteActivity extends AppCompatActivity {
             onBackPressed();
         } else if (id == R.id.menuItemDeleteNote) {
             showDeleteNoteDialog();
+        } else if (id == R.id.menuItemEditNote){
+            goToEditView();
         }
         return super.onOptionsItemSelected(item);
     }
 
+    void goToEditView(){
+        Intent intent = new Intent(this, CreateNoteActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.putExtra(NotesActivity.PARCED_NOTE, note);
+        intent.putExtra(NotesActivity.ACTION_STATUS, ActionStatus.UPDATE);
+        startActivity(intent);
+        finish();
+    }
 
     private void showDeleteNoteDialog() {
         final DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {

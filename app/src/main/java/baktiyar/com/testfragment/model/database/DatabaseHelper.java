@@ -79,13 +79,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public int updateNote(Note note) {
         SQLiteDatabase db = this.getWritableDatabase();
-
         ContentValues values = new ContentValues();
         values.put(Note.COLUMN_TITLE, note.getTitle());
         values.put(Note.COLUMN_DESCRIPTION, note.getDescription());
         values.put(Note.COLUMN_DO_DATE, note.getDoDate());
         values.put(Note.COLUMN_DO_TIME, note.getDoTime());
-
         // updating row
         return db.update(Note.TABLE_NAME, values, Note.COLUMN_ID + " = ?",
                 new String[]{String.valueOf(note.getId())});

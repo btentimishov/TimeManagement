@@ -7,12 +7,10 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import java.util.ArrayList;
@@ -23,10 +21,12 @@ import baktiyar.com.testfragment.model.database.DatabaseHelper;
 import baktiyar.com.testfragment.ui.create_note.CreateNoteActivity;
 import baktiyar.com.testfragment.ui.detailes.DetailedNoteActivity;
 import baktiyar.com.testfragment.ui.quiz.QuizActivity;
+import baktiyar.com.testfragment.utils.ActionStatus;
 
 public class NotesActivity extends AppCompatActivity implements View.OnClickListener, NotesContract.View, NotesAdapter.OnClickListener {
 
     public static final String PARCED_NOTE = "parced note";
+    public static final String ACTION_STATUS = "action status";
 
     private RecyclerView mRvNoteList;
     private FloatingActionButton mFabAddNote;
@@ -85,6 +85,7 @@ public class NotesActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View v) {
         if (v == mFabAddNote) {
             Intent intent = new Intent(this, CreateNoteActivity.class);
+            intent.putExtra(ACTION_STATUS, ActionStatus.CREATE);
             startActivity(intent);
         } else if (v == mBtnBeginTest){
             Intent intent = new Intent(this, QuizActivity.class);

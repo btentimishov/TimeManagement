@@ -27,6 +27,7 @@
     <string name="do_date">Doing date</string>
     <string name="example_time">12:30</string>
     <string name="example_date">23/12/18</string>
+    <string name="update_note">Update note</string>
     <string-array name="questions">
         <item>1. Do you make a list of the things you have to do each day?</item>
         <item>2. Do you plan your day before you start it?</item>

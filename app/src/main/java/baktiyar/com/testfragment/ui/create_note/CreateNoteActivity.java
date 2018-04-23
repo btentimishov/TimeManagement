@@ -1,5 +1,6 @@
 package baktiyar.com.testfragment.ui.create_note;
 
+import android.content.Intent;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,52 +15,82 @@ import java.util.Objects;
 import baktiyar.com.testfragment.R;
 import baktiyar.com.testfragment.model.Note;
 import baktiyar.com.testfragment.model.database.DatabaseHelper;
+import baktiyar.com.testfragment.ui.notes.NotesActivity;
+import baktiyar.com.testfragment.utils.ActionStatus;
 import baktiyar.com.testfragment.utils.DatePickerFragment;
 import baktiyar.com.testfragment.utils.TimePickerFragment;
 
 public class CreateNoteActivity extends AppCompatActivity implements View.OnClickListener {
-    private TextInputLayout mEtTitle;
-    private TextInputLayout mEtDescription;
+    private TextInputLayout mEtTitle, mEtDescription;
     private TextView mTvDoDate, mTvDoTime;
     private Button mBtnSaveNote;
-    private Note note;
-
+    private Note mNote;
+    private ActionStatus status = ActionStatus.CREATE;
     private DatabaseHelper mDbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_note);
+
         mDbHelper = new DatabaseHelper(this);
         init();
     }
 
+    void initGetIntent() {
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        if (bundle != null) {
+            if (bundle.containsKey(NotesActivity.ACTION_STATUS)) {
+                status = (ActionStatus) bundle.get(NotesActivity.ACTION_STATUS);
+            }
+            if (bundle.containsKey(NotesActivity.PARCED_NOTE)) {
+                mNote = (Note) bundle.getParcelable(NotesActivity.PARCED_NOTE);
+            }
+        }
+    }
 
     private void init() {
-        initActivity();
+        initGetIntent();
         initToolbar();
+        initActivity();
     }
 
     private void saveData() {
         if (isFilled()) {
-            note = new Note();
-            initNote(note);
-            mDbHelper.insertNote(note);
+            initNote(mNote);
+            if (status == ActionStatus.CREATE) {
+                mDbHelper.insertNote(mNote);
+            } else if (status == ActionStatus.UPDATE) {
+                mDbHelper.updateNote(mNote);
+            }
             onBackPressed();
         } else {
             Toast.makeText(this, "Type title", Toast.LENGTH_SHORT).show();
         }
     }
 
+
     private void initActivity() {
+
         mEtTitle = findViewById(R.id.etNoteTitle);
         mEtDescription = findViewById(R.id.etNoteDescription);
-        mBtnSaveNote = findViewById(R.id.btnSaveNote);
         mTvDoDate = findViewById(R.id.tvDoDate);
         mTvDoTime = findViewById(R.id.tvDoTime);
+        mBtnSaveNote = findViewById(R.id.btnSaveNote);
         mTvDoTime.setOnClickListener(this);
         mBtnSaveNote.setOnClickListener(this);
         mTvDoDate.setOnClickListener(this);
+
+
+        if (status == ActionStatus.UPDATE) {
+            getSupportActionBar().setTitle(R.string.update_note);
+            mTvDoTime.setText(mNote.getDoTime());
+            mTvDoDate.setText(mNote.getDoDate());
+            mEtTitle.getEditText().setText(mNote.getTitle());
+            mEtDescription.getEditText().setText(mNote.getDescription());
+        }
+
 
     }
 
@@ -73,7 +104,6 @@ public class CreateNoteActivity extends AppCompatActivity implements View.OnClic
         note.setDescription(mEtDescription.getEditText().getText().toString());
         note.setDoDate(mTvDoDate.getText().toString());
         note.setDoTime(mTvDoTime.getText().toString());
-
     }
 
     @Override
@@ -91,7 +121,7 @@ public class CreateNoteActivity extends AppCompatActivity implements View.OnClic
             saveData();
         } else if (v == mTvDoDate) {
             showDatePickerDialog();
-        } else if (v == mTvDoTime){
+        } else if (v == mTvDoTime) {
             showTimePickerDialog();
         }
     }
@@ -101,10 +131,11 @@ public class CreateNoteActivity extends AppCompatActivity implements View.OnClic
         newFragment.show(getSupportFragmentManager(), "datePicker");
     }
 
-    public void showTimePickerDialog(){
-        TimePickerFragment timePickerFragmen= new TimePickerFragment();
+    public void showTimePickerDialog() {
+        TimePickerFragment timePickerFragmen = new TimePickerFragment();
         timePickerFragmen.show(getSupportFragmentManager(), "timePicker");
     }
+
     public Boolean isFilled() {
         return !Objects.equals(mEtTitle.getEditText().getText().toString(), "");
     }
