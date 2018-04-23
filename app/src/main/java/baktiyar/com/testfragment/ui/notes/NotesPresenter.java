@@ -22,11 +22,6 @@ public class NotesPresenter implements NotesContract.Presenter {
 
     @Override
     public void getNotes() {
-        /*mDbHelper.insertNote(new Note(1, "Haha", "Haha", "Haha"));
-        mDbHelper.insertNote(new Note(2, "Hihi", "Hihi", "Hihi"));
-        mDbHelper.insertNote(new Note(3, "Hehe", "Hehe", "Hehe"));
-        mDbHelper.insertNote(new Note(4, "Huhu", "Huhu", "Huhu"));
-        mDbHelper.insertNote(new Note(5, "Hoho", "Hoho", "Hoho"));*/
         mNoteList = mDbHelper.getAllNotes();
         mView.onGetNotesSuccess(mNoteList);
     }

@@ -20,52 +20,65 @@ import baktiyar.com.testfragment.model.database.DatabaseHelper;
 import baktiyar.com.testfragment.ui.create_note.CreateNoteActivity;
 import baktiyar.com.testfragment.ui.notes.NotesActivity;
 import baktiyar.com.testfragment.utils.ActionStatus;
+import baktiyar.com.testfragment.utils.Utils;
+
+import static baktiyar.com.testfragment.utils.Utils.stringContainsNothing;
 
 public class DetailedNoteActivity extends AppCompatActivity {
-    private Note note = new Note();
+    private Note mNote = new Note();
     private DatabaseHelper mDbHelper;
-    private TextView tvTitle, tvDesc, tvDoDate, tvDoTime;
-    private LinearLayout descLayout, clockLayout;
+    private TextView mTvTitle, mTvDesc, mTvDoDate, mTvDoTime;
+    private LinearLayout mDescLayout, mClockLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detailed_note);
         mDbHelper = new DatabaseHelper(this);
-        note = getIntent().getParcelableExtra(NotesActivity.PARCED_NOTE);
-
         init();
     }
 
     private void init() {
+        initGetIntent();
         initToolbar();
         initActivity();
     }
 
+    private void initGetIntent() {
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        if (bundle!=null){
+            if (bundle.containsKey(NotesActivity.PARCEL_NOTE)){
+                mNote = getIntent().getParcelableExtra(NotesActivity.PARCEL_NOTE);
+            }
+        }
+    }
+
     private void initToolbar() {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(note.getTitle());
+        getSupportActionBar().setTitle(mNote.getTitle());
     }
 
     private void initActivity() {
-        tvTitle = findViewById(R.id.tvDetailedNoteTitle);
-        tvDesc = findViewById(R.id.tvDetailedNoteDescription);
-        tvDoDate = findViewById(R.id.tvDetailedNoteDoDate);
-        tvDoTime = findViewById(R.id.tvDetailedNoteDoTime);
+        mTvTitle = findViewById(R.id.tvDetailedNoteTitle);
+        mTvDesc = findViewById(R.id.tvDetailedNoteDescription);
+        mTvDoDate = findViewById(R.id.tvDetailedNoteDoDate);
+        mTvDoTime = findViewById(R.id.tvDetailedNoteDoTime);
 
-        tvTitle.setText(note.getTitle());
-        clockLayout = findViewById(R.id.detailedClockLayout);
-        descLayout = findViewById(R.id.detailedDescLayout);
-        if (!Objects.equals(note.getDescription(), "")) {
-            tvDesc.setText(note.getDescription());
+        mTvTitle.setText(mNote.getTitle());
+        mClockLayout = findViewById(R.id.detailedClockLayout);
+        mDescLayout = findViewById(R.id.detailedDescLayout);
+
+        if (!stringContainsNothing(mNote.getDescription())) {
+            mTvDesc.setText(mNote.getDescription());
         } else {
-            descLayout.setVisibility(View.GONE);
+            mDescLayout.setVisibility(View.GONE);
         }
-        if (Objects.equals(note.getDoDate(), "") & Objects.equals(note.getDoTime(), "")) {
-            clockLayout.setVisibility(View.GONE);
+        if (stringContainsNothing(mNote.getDoDate()) & stringContainsNothing(mNote.getDoTime())) {
+            mClockLayout.setVisibility(View.GONE);
         } else {
-            tvDoDate.setText(note.getDoDate());
-            tvDoTime.setText(note.getDoTime());
+            mTvDoDate.setText(mNote.getDoDate());
+            mTvDoTime.setText(mNote.getDoTime());
         }
     }
 
@@ -92,7 +105,7 @@ public class DetailedNoteActivity extends AppCompatActivity {
     void goToEditView(){
         Intent intent = new Intent(this, CreateNoteActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intent.putExtra(NotesActivity.PARCED_NOTE, note);
+        intent.putExtra(NotesActivity.PARCEL_NOTE, mNote);
         intent.putExtra(NotesActivity.ACTION_STATUS, ActionStatus.UPDATE);
         startActivity(intent);
         finish();
@@ -115,14 +128,14 @@ public class DetailedNoteActivity extends AppCompatActivity {
         };
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Are you sure to delete \"" + note.getTitle() + "\"?")
+        builder.setMessage("Are you sure to delete \"" + mNote.getTitle() + "\"?")
                 .setPositiveButton("Yes", dialogClickListener)
                 .setNegativeButton("No", dialogClickListener)
                 .show();
     }
 
     private void deleteNote() {
-        mDbHelper.deleteNote(note);
+        mDbHelper.deleteNote(mNote);
         onBackPressed();
     }
 }

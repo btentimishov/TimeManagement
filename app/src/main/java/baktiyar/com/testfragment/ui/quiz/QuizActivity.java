@@ -17,13 +17,14 @@ import baktiyar.com.testfragment.R;
 public class QuizActivity extends AppCompatActivity implements View.OnClickListener {
 
     private RadioButton rdBtnAlways, rdBtnFrequently, rdBtnSometimes, rdBtnInfrequently, rdBtnNever;
-    RadioGroup rdBtnGroup;
+    private RadioGroup rdBtnGroup;
     private TextView tvQuizQuestion, tvQuizQuestionTitle;
     private Button btnNext;
+
     private int score = 0;
     private int questionPosition = 0;
 
-    List<String> myResArrayList;
+    private List<String> myResArrayList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

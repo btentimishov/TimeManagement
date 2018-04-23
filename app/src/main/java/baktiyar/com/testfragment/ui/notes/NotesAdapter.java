@@ -12,6 +12,9 @@ import java.util.Objects;
 
 import baktiyar.com.testfragment.R;
 import baktiyar.com.testfragment.model.Note;
+import baktiyar.com.testfragment.utils.Utils;
+
+import static baktiyar.com.testfragment.utils.Utils.stringContainsNothing;
 
 /**
  * Created by admin on 20.04.2018.
@@ -32,8 +35,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteHolder> 
 
     @Override
     public NoteHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.note_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.note_item, parent, false);
         NoteHolder holder = new NoteHolder(view);
         return holder;
     }
@@ -43,21 +45,13 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteHolder> 
         holder.bindNote(mNoteList.get(position));
     }
 
-    void setList(ArrayList<Note> notes) {
-        this.mNoteList = notes;
-        notifyDataSetChanged();
-    }
-
     @Override
     public int getItemCount() {
         return mNoteList.size();
     }
 
     class NoteHolder extends RecyclerView.ViewHolder {
-        TextView tvNoteDoDate;
-        TextView tvNoteDoTime;
-        TextView tvNoteTitle;
-
+        TextView tvNoteDoDate, tvNoteDoTime, tvNoteTitle;
         LinearLayout clockLayout;
 
         NoteHolder(View itemView) {
@@ -77,7 +71,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteHolder> 
                 }
 
             });
-            if (Objects.equals(note.getDoDate(), "") & Objects.equals(note.getDoTime(), "")) {
+            if (stringContainsNothing(note.getDoDate()) & stringContainsNothing(note.getDoTime())) {
                 clockLayout.setVisibility(View.GONE);
             } else {
                 tvNoteDoDate.setText(note.getDoDate());

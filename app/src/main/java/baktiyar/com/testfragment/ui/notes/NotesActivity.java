@@ -25,12 +25,12 @@ import baktiyar.com.testfragment.utils.ActionStatus;
 
 public class NotesActivity extends AppCompatActivity implements View.OnClickListener, NotesContract.View, NotesAdapter.OnClickListener {
 
-    public static final String PARCED_NOTE = "parced note";
+    public static final String PARCEL_NOTE = "parced note";
     public static final String ACTION_STATUS = "action status";
 
     private RecyclerView mRvNoteList;
     private FloatingActionButton mFabAddNote;
-    private LinearLayout mNoDataLayout;
+    private LinearLayout mNoDataLayout, mNoteListLayout;
     private Button mBtnBeginTest;
 
     private NotesAdapter mNotesAdapter;
@@ -56,8 +56,8 @@ public class NotesActivity extends AppCompatActivity implements View.OnClickList
         mRvNoteList = findViewById(R.id.rvNoteList);
         mFabAddNote = findViewById(R.id.fabAddNote);
         mBtnBeginTest = findViewById(R.id.btnBeginTest);
-
         mNoDataLayout = findViewById(R.id.noData);
+        mNoteListLayout = findViewById(R.id.noteListLayout);
         mFabAddNote.setOnClickListener(this);
         mBtnBeginTest.setOnClickListener(this);
     }
@@ -98,15 +98,15 @@ public class NotesActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onGetNotesSuccess(ArrayList<Note> notes) {
         mNoteList = notes;
-        mNotesAdapter.setList(mNoteList);
-        mNotesAdapter.notifyDataSetChanged();
+        mNotesAdapter = new NotesAdapter(mNoteList, this);
+        mRvNoteList.setAdapter(mNotesAdapter);
         initToolbar();
     }
 
     @Override
     public void onClick(Note note) {
         Intent intent = new Intent(this, DetailedNoteActivity.class);
-        intent.putExtra(PARCED_NOTE, note);
+        intent.putExtra(PARCEL_NOTE, note);
         startActivity(intent);
     }
 
@@ -114,6 +114,7 @@ public class NotesActivity extends AppCompatActivity implements View.OnClickList
         mPresenter.getNotes();
         checkList();
     }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -123,11 +124,11 @@ public class NotesActivity extends AppCompatActivity implements View.OnClickList
     private void checkList(){
         if (mNoteList.size() == 0){
             mNoDataLayout.setVisibility(View.VISIBLE);
-            mRvNoteList.setVisibility(View.GONE);
+            mNoteListLayout.setVisibility(View.GONE);
         }
         else {
             mNoDataLayout.setVisibility(View.GONE);
-            mRvNoteList.setVisibility(View.VISIBLE);
+            mNoteListLayout.setVisibility(View.VISIBLE);
         }
     }
 }

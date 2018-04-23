@@ -19,12 +19,16 @@ import baktiyar.com.testfragment.ui.notes.NotesActivity;
 import baktiyar.com.testfragment.utils.ActionStatus;
 import baktiyar.com.testfragment.utils.DatePickerFragment;
 import baktiyar.com.testfragment.utils.TimePickerFragment;
+import baktiyar.com.testfragment.utils.Utils;
+
+import static baktiyar.com.testfragment.utils.Utils.stringContainsNothing;
+import static baktiyar.com.testfragment.utils.Utils.stringIsNull;
 
 public class CreateNoteActivity extends AppCompatActivity implements View.OnClickListener {
     private TextInputLayout mEtTitle, mEtDescription;
     private TextView mTvDoDate, mTvDoTime;
     private Button mBtnSaveNote;
-    private Note mNote;
+    private Note mNote = new Note();
     private ActionStatus status = ActionStatus.CREATE;
     private DatabaseHelper mDbHelper;
 
@@ -44,8 +48,8 @@ public class CreateNoteActivity extends AppCompatActivity implements View.OnClic
             if (bundle.containsKey(NotesActivity.ACTION_STATUS)) {
                 status = (ActionStatus) bundle.get(NotesActivity.ACTION_STATUS);
             }
-            if (bundle.containsKey(NotesActivity.PARCED_NOTE)) {
-                mNote = (Note) bundle.getParcelable(NotesActivity.PARCED_NOTE);
+            if (bundle.containsKey(NotesActivity.PARCEL_NOTE)) {
+                mNote = (Note) bundle.getParcelable(NotesActivity.PARCEL_NOTE);
             }
         }
     }
@@ -72,7 +76,6 @@ public class CreateNoteActivity extends AppCompatActivity implements View.OnClic
 
 
     private void initActivity() {
-
         mEtTitle = findViewById(R.id.etNoteTitle);
         mEtDescription = findViewById(R.id.etNoteDescription);
         mTvDoDate = findViewById(R.id.tvDoDate);
@@ -100,10 +103,18 @@ public class CreateNoteActivity extends AppCompatActivity implements View.OnClic
     }
 
     private void initNote(Note note) {
-        note.setTitle(mEtTitle.getEditText().getText().toString());
-        note.setDescription(mEtDescription.getEditText().getText().toString());
-        note.setDoDate(mTvDoDate.getText().toString());
-        note.setDoTime(mTvDoTime.getText().toString());
+        if (!stringIsNull(mEtTitle.getEditText().getText().toString())) {
+            note.setTitle(mEtTitle.getEditText().getText().toString());
+        }
+        if (!stringIsNull(mEtDescription.getEditText().getText().toString())) {
+            note.setDescription(mEtDescription.getEditText().getText().toString());
+        }
+        if (!stringIsNull(mTvDoDate.getText().toString())) {
+            note.setDoDate(mTvDoDate.getText().toString());
+        }
+        if (!stringIsNull(mTvDoTime.getText().toString())) {
+            note.setDoTime(mTvDoTime.getText().toString());
+        }
     }
 
     @Override
@@ -117,23 +128,20 @@ public class CreateNoteActivity extends AppCompatActivity implements View.OnClic
 
     @Override
     public void onClick(View v) {
-        if (v == mBtnSaveNote) {
-            saveData();
-        } else if (v == mTvDoDate) {
-            showDatePickerDialog();
-        } else if (v == mTvDoTime) {
-            showTimePickerDialog();
-        }
+        if (v == mBtnSaveNote) saveData();
+        else if (v == mTvDoDate) showDatePickerDialog();
+        else if (v == mTvDoTime) showTimePickerDialog();
+
     }
 
     public void showDatePickerDialog() {
-        DatePickerFragment newFragment = new DatePickerFragment();
-        newFragment.show(getSupportFragmentManager(), "datePicker");
+        DatePickerFragment datePickerFragment = new DatePickerFragment();
+        datePickerFragment.show(getSupportFragmentManager(), "datePicker");
     }
 
     public void showTimePickerDialog() {
-        TimePickerFragment timePickerFragmen = new TimePickerFragment();
-        timePickerFragmen.show(getSupportFragmentManager(), "timePicker");
+        TimePickerFragment timePickerFragment = new TimePickerFragment();
+        timePickerFragment.show(getSupportFragmentManager(), "timePicker");
     }
 
     public Boolean isFilled() {
