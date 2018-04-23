@@ -34,7 +34,6 @@ public class DetailedNoteActivity extends AppCompatActivity {
     private void init() {
         initToolbar();
         initActivity();
-
     }
 
     private void initToolbar() {
