@@ -25,8 +25,8 @@
 
         <Button
             android:id="@+id/btnBeginTest"
-            android:drawableRight="@drawable/ic_arrow"
-            android:drawablePadding="@dimen/margin_16"
+            android:drawableRight="@drawable/ic_arrow_white"
+            android:padding="@dimen/margin_12"
             style="@style/BTN"
             android:textStyle="bold"
             android:layout_width="match_parent"
@@ -38,7 +38,6 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rvNoteList"
             android:layout_width="match_parent"
-            android:layout_marginBottom="@dimen/margin_12"
             android:layout_height="match_parent" />
     </LinearLayout>
 

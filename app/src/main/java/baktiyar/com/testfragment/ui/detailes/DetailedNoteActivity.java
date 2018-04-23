@@ -7,7 +7,11 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import java.util.Objects;
 
 import baktiyar.com.testfragment.R;
 import baktiyar.com.testfragment.model.Note;
@@ -20,6 +24,7 @@ public class DetailedNoteActivity extends AppCompatActivity {
     private TextView tvTitle;
     private TextView tvDesc;
     private TextView tvDoTime;
+    private LinearLayout descLayout, clockLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,8 +51,18 @@ public class DetailedNoteActivity extends AppCompatActivity {
         tvDesc = findViewById(R.id.tvDetailedNoteDescription);
         tvDoTime = findViewById(R.id.tvDetailedNoteDoTime);
         tvTitle.setText(note.getTitle());
-        tvDesc.setText(note.getDescription());
-        tvDoTime.setText(note.getDoTime());
+        clockLayout = findViewById(R.id.detailedClockLayout);
+        descLayout = findViewById(R.id.detailedDescLayout);
+        if (!Objects.equals(note.getDescription(), "")) {
+            tvDesc.setText(note.getDescription());
+        } else {
+            descLayout.setVisibility(View.GONE);
+        }
+        if (!Objects.equals(note.getDoTime(), "")) {
+            tvDoTime.setText(note.getDoTime());
+        } else {
+            clockLayout.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -86,9 +101,9 @@ public class DetailedNoteActivity extends AppCompatActivity {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Are you sure to delete \"" + note.getTitle() + "\"?")
-               .setPositiveButton("Yes", dialogClickListener)
-               .setNegativeButton("No", dialogClickListener)
-               .show();
+                .setPositiveButton("Yes", dialogClickListener)
+                .setNegativeButton("No", dialogClickListener)
+                .show();
     }
 
     private void deleteNote() {

@@ -25,7 +25,10 @@
         <item name="android:textSize">@dimen/text_size</item>
         <item name="android:textColor">@android:color/white</item>
     </style>
-
+    <style name="TextViewTitle" parent="android:Widget.TextView">
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textSize">@dimen/text_size_23_sp</item>
+    </style>
     <dimen name="size_40">40dp</dimen>
     <dimen name="size_300">300dp</dimen>
 </resources>

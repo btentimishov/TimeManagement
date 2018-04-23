@@ -1,7 +1,10 @@
 package baktiyar.com.testfragment.ui.notes;
 
 import android.content.Intent;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -68,7 +71,13 @@ public class NotesActivity extends AppCompatActivity implements View.OnClickList
         mRvNoteList.setAdapter(mNotesAdapter);
 
     }
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    private void initToolbar(){
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setSubtitle("Todos: " + mNoteList.size());
+        actionBar.setIcon(getDrawable(R.drawable.ic_add));
 
+    }
     @Override
     public void onClick(View v) {
         if (v == mFabAddNote) {
@@ -85,7 +94,7 @@ public class NotesActivity extends AppCompatActivity implements View.OnClickList
     public void onGetNotesSuccess(ArrayList<Note> notes) {
         mNoteList = notes;
         mNotesAdapter.setList(mNoteList);
-        getSupportActionBar().setSubtitle("Todos: " + mNoteList.size());
+        initToolbar();
     }
 
     @Override

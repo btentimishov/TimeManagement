@@ -18,7 +18,7 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
 
     private RadioButton rdBtnAlways, rdBtnFrequently, rdBtnSometimes, rdBtnInfrequently, rdBtnNever;
     RadioGroup rdBtnGroup;
-    private TextView tvQuizQuestion;
+    private TextView tvQuizQuestion, tvQuizQuestionTitle;
     private Button btnNext;
     private int score = 0;
     private int questionPosition = 0;
@@ -51,7 +51,7 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
         rdBtnInfrequently = findViewById(R.id.rdBtnInfrequently);
         rdBtnNever = findViewById(R.id.rdBtnNever);
         rdBtnGroup = findViewById(R.id.rdBtnGroup);
-
+        tvQuizQuestionTitle = findViewById(R.id.tvQuizQuestionTitle);
         tvQuizQuestion = findViewById(R.id.tvQuizQuestion);
         btnNext = findViewById(R.id.btnNext);
         btnNext.setOnClickListener(this);
@@ -102,7 +102,8 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
 
     private void giveResult() {
         rdBtnGroup.setVisibility(View.GONE);
-        tvQuizQuestion.setText("Ваше очко: " + score);
+        tvQuizQuestionTitle.setText("Result:");
+        tvQuizQuestion.setText("Your result is : " + score+" from 90 max score");
         btnNext.setVisibility(View.GONE);
     }
 
