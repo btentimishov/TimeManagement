@@ -69,6 +69,7 @@ public class DetailedNoteActivity extends AppCompatActivity {
         mClockLayout = findViewById(R.id.detailedClockLayout);
         mDescLayout = findViewById(R.id.detailedDescLayout);
 
+
         if (!stringContainsNothing(mNote.getDescription())) {
             mTvDesc.setText(mNote.getDescription());
         } else {

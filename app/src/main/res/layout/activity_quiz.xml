@@ -104,7 +104,6 @@
             android:orientation="vertical">
 
             <Button
-
                 android:id="@+id/btnNext"
                 style="@style/BTN"
                 android:layout_width="wrap_content"
