@@ -1,35 +1,28 @@
-package baktiyar.com.testfragment.utils;
+package baktiyar.com.testfragment.utils
 
-import android.app.Dialog;
-import android.app.TimePickerDialog;
-import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
-import androidx.fragment.app.DialogFragment;
-import android.widget.TextView;
-import android.widget.TimePicker;
-
-import java.util.Calendar;
-
-import baktiyar.com.testfragment.R;
+import android.app.Dialog
+import android.app.TimePickerDialog
+import android.app.TimePickerDialog.OnTimeSetListener
+import android.os.Bundle
+import android.widget.TextView
+import android.widget.TimePicker
+import androidx.fragment.app.DialogFragment
+import baktiyar.com.testfragment.R
+import java.util.Calendar
 
 /**
  * Created by admin on 23.04.2018.
  */
-
-public class TimePickerFragment extends DialogFragment implements TimePickerDialog.OnTimeSetListener {
-    @NonNull
-    @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
-        final Calendar c = Calendar.getInstance();
-        int hour = c.get(Calendar.HOUR);
-        int minute = c.get(Calendar.MINUTE);
-        return new TimePickerDialog(getActivity(), this, hour, minute, true);
+class TimePickerFragment : DialogFragment(), OnTimeSetListener {
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        val c = Calendar.getInstance()
+        val hour = c[Calendar.HOUR]
+        val minute = c[Calendar.MINUTE]
+        return TimePickerDialog(activity, this, hour, minute, true)
     }
 
-    @Override
-    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-        TextView textView = getActivity().findViewById(R.id.tvDoTime);
-        textView.setText(hourOfDay + ":" + minute);
+    override fun onTimeSet(view: TimePicker, hourOfDay: Int, minute: Int) {
+        val textView = requireActivity().findViewById<TextView>(R.id.tvDoTime)
+        textView.text = "$hourOfDay:$minute"
     }
 }

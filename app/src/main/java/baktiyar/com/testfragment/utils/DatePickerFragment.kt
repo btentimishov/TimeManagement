@@ -1,38 +1,29 @@
-package baktiyar.com.testfragment.utils;
+package baktiyar.com.testfragment.utils
 
-import android.app.DatePickerDialog;
-import android.app.Dialog;
-import android.os.Bundle;
-import androidx.fragment.app.DialogFragment;
-import android.widget.DatePicker;
-import android.widget.TextView;
-
-import java.util.Calendar;
-
-import baktiyar.com.testfragment.R;
+import android.app.DatePickerDialog
+import android.app.DatePickerDialog.OnDateSetListener
+import android.app.Dialog
+import android.os.Bundle
+import android.widget.DatePicker
+import android.widget.TextView
+import androidx.fragment.app.DialogFragment
+import baktiyar.com.testfragment.R
+import java.util.Calendar
 
 /**
  * Created by admin on 21.04.2018.
  */
-
-public class DatePickerFragment extends DialogFragment
-        implements DatePickerDialog.OnDateSetListener {
-
-
-    @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
-        final Calendar c = Calendar.getInstance();
-        int year = c.get(Calendar.YEAR);
-        int month = c.get(Calendar.MONTH);
-        int day = c.get(Calendar.DAY_OF_MONTH);
-
-        return new DatePickerDialog(getActivity(), this, year, month, day);
+class DatePickerFragment : DialogFragment(), OnDateSetListener {
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        val c = Calendar.getInstance()
+        val year = c[Calendar.YEAR]
+        val month = c[Calendar.MONTH]
+        val day = c[Calendar.DAY_OF_MONTH]
+        return DatePickerDialog(requireActivity(), this, year, month, day)
     }
 
-    public void onDateSet(DatePicker view, int year, int month, int day) {
-        TextView tvDoDate = getActivity().findViewById(R.id.tvDoDate);
-        tvDoDate.setText(view.getDayOfMonth() + "/" + view.getMonth() + "/" + view.getYear());
+    override fun onDateSet(view: DatePicker, year: Int, month: Int, day: Int) {
+        val tvDoDate = requireActivity().findViewById<TextView>(R.id.tvDoDate)
+        tvDoDate.text = view.dayOfMonth.toString() + "/" + view.month + "/" + view.year
     }
-
-
 }

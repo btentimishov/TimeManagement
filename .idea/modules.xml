@@ -2,13 +2,11 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/TestFragment.iml" filepath="$PROJECT_DIR$/TestFragment.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/TimeManagement.iml" filepath="$PROJECT_DIR$/.idea/modules/TimeManagement.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/TimeManagement.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/TimeManagement.app.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/TimeManagement.app.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/TimeManagement.app.androidTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/TimeManagement.app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/app/TimeManagement.app.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/TimeManagement.app.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/TimeManagement.app.unitTest.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
 </project>

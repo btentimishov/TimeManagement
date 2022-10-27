@@ -1,72 +1,61 @@
-package baktiyar.com.testfragment.ui.notes;
+package baktiyar.com.testfragment.ui.notes
 
-import androidx.recyclerview.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-
-import java.util.ArrayList;
-
-import baktiyar.com.testfragment.R;
-import baktiyar.com.testfragment.model.Note;
-
-import static baktiyar.com.testfragment.utils.Utils.stringContainsNothing;
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.LinearLayout
+import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
+import baktiyar.com.testfragment.R
+import baktiyar.com.testfragment.model.Note
+import baktiyar.com.testfragment.ui.notes.NotesAdapter.NoteHolder
+import baktiyar.com.testfragment.utils.Utils.stringContainsNothing
 
 /**
  * Created by admin on 20.04.2018.
  */
-
-public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteHolder> {
-    private ArrayList<Note> mNoteList;
-    private OnClickListener mListener;
-
+class NotesAdapter(
+    private val mNoteList: ArrayList<Note>?,
+    private val mListener: OnClickListener
+) : RecyclerView.Adapter<NoteHolder>() {
     interface OnClickListener {
-        void onNoteClick(Note note);
+        fun onNoteClick(note: Note?)
     }
 
-    public NotesAdapter(ArrayList<Note> notes, OnClickListener listener) {
-        this.mNoteList = notes;
-        this.mListener = listener;
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteHolder {
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.note_item, parent, false)
+        return NoteHolder(view)
     }
 
-    @Override
-    public NoteHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.note_item, parent, false);
-        return new NoteHolder(view);
+    override fun onBindViewHolder(holder: NoteHolder, position: Int) {
+        holder.bindNote(mNoteList!![position])
     }
 
-    @Override
-    public void onBindViewHolder(NoteHolder holder, int position) {
-        holder.bindNote(mNoteList.get(position));
+    override fun getItemCount(): Int {
+        return mNoteList!!.size
     }
 
-    @Override
-    public int getItemCount() {
-        return mNoteList.size();
-    }
+    inner class NoteHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        var tvNoteDoDate: TextView
+        var tvNoteDoTime: TextView
+        var tvNoteTitle: TextView
+        var clockLayout: LinearLayout
 
-    class NoteHolder extends RecyclerView.ViewHolder {
-        TextView tvNoteDoDate, tvNoteDoTime, tvNoteTitle;
-        LinearLayout clockLayout;
-
-        NoteHolder(View itemView) {
-            super(itemView);
-            tvNoteTitle = itemView.findViewById(R.id.tvNoteTitle);
-            tvNoteDoDate = itemView.findViewById(R.id.tvNoteDoDate);
-            tvNoteDoTime = itemView.findViewById(R.id.tvNoteDoTime);
-            clockLayout = itemView.findViewById(R.id.clockLayout);
+        init {
+            tvNoteTitle = itemView.findViewById(R.id.tvNoteTitle)
+            tvNoteDoDate = itemView.findViewById(R.id.tvNoteDoDate)
+            tvNoteDoTime = itemView.findViewById(R.id.tvNoteDoTime)
+            clockLayout = itemView.findViewById(R.id.clockLayout)
         }
 
-        void bindNote(final Note note) {
-            tvNoteTitle.setText(note.getTitle());
-            itemView.setOnClickListener(v -> mListener.onNoteClick(note));
-            if (stringContainsNothing(note.getDoDate()) & stringContainsNothing(note.getDoTime())) {
-                clockLayout.setVisibility(View.GONE);
+        fun bindNote(note: Note?) {
+            tvNoteTitle.text = note?.title
+            itemView.setOnClickListener { v: View? -> mListener.onNoteClick(note) }
+            if (stringContainsNothing(note?.doDate) and stringContainsNothing(note?.doTime)) {
+                clockLayout.visibility = View.GONE
             } else {
-                tvNoteDoDate.setText(note.getDoDate());
-                tvNoteDoTime.setText(note.getDoTime());
+                tvNoteDoDate.text = note?.doDate
+                tvNoteDoTime.text = note?.doTime
             }
         }
     }

@@ -1,149 +1,131 @@
-package baktiyar.com.testfragment.ui.create_note;
+package baktiyar.com.testfragment.ui.create_note
 
-import android.content.Intent;
-import com.google.android.material.textfield.TextInputLayout;
-import androidx.appcompat.app.AppCompatActivity;
-import android.os.Bundle;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.os.Bundle
+import android.view.MenuItem
+import android.view.View
+import android.widget.Button
+import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import baktiyar.com.testfragment.R
+import baktiyar.com.testfragment.model.Note
+import baktiyar.com.testfragment.model.database.DatabaseHelper
+import baktiyar.com.testfragment.ui.notes.NotesActivity
+import baktiyar.com.testfragment.utils.ActionStatus
+import baktiyar.com.testfragment.utils.DatePickerFragment
+import baktiyar.com.testfragment.utils.TimePickerFragment
+import baktiyar.com.testfragment.utils.Utils.stringIsNull
+import com.google.android.material.textfield.TextInputLayout
 
-import java.util.Objects;
-
-import baktiyar.com.testfragment.R;
-import baktiyar.com.testfragment.model.Note;
-import baktiyar.com.testfragment.model.database.DatabaseHelper;
-import baktiyar.com.testfragment.ui.notes.NotesActivity;
-import baktiyar.com.testfragment.utils.ActionStatus;
-import baktiyar.com.testfragment.utils.DatePickerFragment;
-import baktiyar.com.testfragment.utils.TimePickerFragment;
-
-import static baktiyar.com.testfragment.utils.Utils.stringIsNull;
-
-public class CreateNoteActivity extends AppCompatActivity implements View.OnClickListener {
-    private TextInputLayout mEtTitle, mEtDescription;
-    private TextView mTvDoDate, mTvDoTime;
-    private Button mBtnSaveNote;
-    private Note mNote = new Note();
-    private ActionStatus status = ActionStatus.CREATE;
-    private DatabaseHelper mDbHelper;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_note);
-
-        mDbHelper = new DatabaseHelper(this);
-        init();
+class CreateNoteActivity : AppCompatActivity(), View.OnClickListener {
+    private lateinit var mEtTitle: TextInputLayout
+    private lateinit var mEtDescription: TextInputLayout
+    private lateinit var mTvDoDate: TextView
+    private lateinit var mTvDoTime: TextView
+    private lateinit var mBtnSaveNote: Button
+    private var mNote: Note? = Note()
+    private var status: ActionStatus? = ActionStatus.CREATE
+    private var mDbHelper: DatabaseHelper? = null
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_create_note)
+        mDbHelper = DatabaseHelper(this)
+        init()
     }
 
-    void initGetIntent() {
-        Intent intent = getIntent();
-        Bundle bundle = intent.getExtras();
+    fun initGetIntent() {
+        val intent = intent
+        val bundle = intent.extras
         if (bundle != null) {
-            if (bundle.containsKey(NotesActivity.ACTION_STATUS)) {
-                status = (ActionStatus) bundle.get(NotesActivity.ACTION_STATUS);
+            if (bundle.containsKey(NotesActivity.Companion.ACTION_STATUS)) {
+                status = bundle[NotesActivity.Companion.ACTION_STATUS] as ActionStatus?
             }
-            if (bundle.containsKey(NotesActivity.PARCEL_NOTE)) {
-                mNote = (Note) bundle.getParcelable(NotesActivity.PARCEL_NOTE);
+            if (bundle.containsKey(NotesActivity.Companion.PARCEL_NOTE)) {
+                mNote = bundle.getParcelable(NotesActivity.Companion.PARCEL_NOTE)
             }
         }
     }
 
-    private void init() {
-        initGetIntent();
-        initToolbar();
-        initActivity();
+    private fun init() {
+        initGetIntent()
+        initToolbar()
+        initActivity()
     }
 
-    private void saveData() {
-        if (isFilled()) {
-            initNote(mNote);
-            if (status == ActionStatus.CREATE) {
-                mDbHelper.insertNote(mNote);
-            } else if (status == ActionStatus.UPDATE) {
-                mDbHelper.updateNote(mNote);
+    private fun saveData() {
+        if (isFilled) {
+            initNote(mNote)
+            if (status === ActionStatus.CREATE) {
+                mDbHelper!!.insertNote(mNote)
+            } else if (status === ActionStatus.UPDATE) {
+                mDbHelper!!.updateNote(mNote)
             }
-            onBackPressed();
+            onBackPressed()
         } else {
-            Toast.makeText(this, "Type title", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Type title", Toast.LENGTH_SHORT).show()
         }
     }
 
-
-    private void initActivity() {
-        mEtTitle = findViewById(R.id.etNoteTitle);
-        mEtDescription = findViewById(R.id.etNoteDescription);
-        mTvDoDate = findViewById(R.id.tvDoDate);
-        mTvDoTime = findViewById(R.id.tvDoTime);
-        mBtnSaveNote = findViewById(R.id.btnSaveNote);
-        mTvDoTime.setOnClickListener(this);
-        mBtnSaveNote.setOnClickListener(this);
-        mTvDoDate.setOnClickListener(this);
-
-
-        if (status == ActionStatus.UPDATE) {
-            getSupportActionBar().setTitle(R.string.update_note);
-            mTvDoTime.setText(mNote.getDoTime());
-            mTvDoDate.setText(mNote.getDoDate());
-            mEtTitle.getEditText().setText(mNote.getTitle());
-            mEtDescription.getEditText().setText(mNote.getDescription());
-        }
-
-
-    }
-
-    private void initToolbar() {
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(R.string.create_note);
-    }
-
-    private void initNote(Note note) {
-        if (!stringIsNull(mEtTitle.getEditText().getText().toString())) {
-            note.setTitle(mEtTitle.getEditText().getText().toString());
-        }
-        if (!stringIsNull(mEtDescription.getEditText().getText().toString())) {
-            note.setDescription(mEtDescription.getEditText().getText().toString());
-        }
-        if (!stringIsNull(mTvDoDate.getText().toString())) {
-            note.setDoDate(mTvDoDate.getText().toString());
-        }
-        if (!stringIsNull(mTvDoTime.getText().toString())) {
-            note.setDoTime(mTvDoTime.getText().toString());
+    private fun initActivity() {
+        mEtTitle = findViewById(R.id.etNoteTitle)
+        mEtDescription = findViewById(R.id.etNoteDescription)
+        mTvDoDate = findViewById(R.id.tvDoDate)
+        mTvDoTime = findViewById(R.id.tvDoTime)
+        mBtnSaveNote = findViewById(R.id.btnSaveNote)
+        mTvDoTime.setOnClickListener(this)
+        mBtnSaveNote.setOnClickListener(this)
+        mTvDoDate.setOnClickListener(this)
+        if (status === ActionStatus.UPDATE) {
+            supportActionBar!!.setTitle(R.string.update_note)
+            mTvDoTime.setText(mNote?.doTime)
+            mTvDoDate.setText(mNote?.doDate)
+            mEtTitle.getEditText()?.setText(mNote?.title)
+            mEtDescription.getEditText()?.setText(mNote?.description)
         }
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
+    private fun initToolbar() {
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        supportActionBar!!.setTitle(R.string.create_note)
+    }
+
+    private fun initNote(note: Note?) {
+        if (!stringIsNull(mEtTitle.editText!!.text.toString())) {
+            note?.title = mEtTitle.editText!!.text.toString()
+        }
+        if (!stringIsNull(mEtDescription.editText!!.text.toString())) {
+            note?.description = mEtDescription.editText!!.text.toString()
+        }
+        if (!stringIsNull(mTvDoDate.text.toString())) {
+            note?.doDate = mTvDoDate.text.toString()
+        }
+        if (!stringIsNull(mTvDoTime.text.toString())) {
+            note?.doTime = mTvDoTime.text.toString()
+        }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val id = item.itemId
         if (id == android.R.id.home) {
-            onBackPressed();
+            onBackPressed()
         }
-        return super.onOptionsItemSelected(item);
+        return super.onOptionsItemSelected(item)
     }
 
-    @Override
-    public void onClick(View v) {
-        if (v == mBtnSaveNote) saveData();
-        else if (v == mTvDoDate) showDatePickerDialog();
-        else if (v == mTvDoTime) showTimePickerDialog();
-
+    override fun onClick(v: View) {
+        if (v === mBtnSaveNote) saveData() else if (v === mTvDoDate) showDatePickerDialog() else if (v === mTvDoTime) showTimePickerDialog()
     }
 
-    public void showDatePickerDialog() {
-        DatePickerFragment datePickerFragment = new DatePickerFragment();
-        datePickerFragment.show(getSupportFragmentManager(), "datePicker");
+    fun showDatePickerDialog() {
+        val datePickerFragment = DatePickerFragment()
+        datePickerFragment.show(supportFragmentManager, "datePicker")
     }
 
-    public void showTimePickerDialog() {
-        TimePickerFragment timePickerFragment = new TimePickerFragment();
-        timePickerFragment.show(getSupportFragmentManager(), "timePicker");
+    fun showTimePickerDialog() {
+        val timePickerFragment = TimePickerFragment()
+        timePickerFragment.show(supportFragmentManager, "timePicker")
     }
 
-    public Boolean isFilled() {
-        return !Objects.equals(mEtTitle.getEditText().getText().toString(), "");
-    }
-
+    val isFilled: Boolean
+        get() = mEtTitle!!.editText!!.text.toString() != ""
 }

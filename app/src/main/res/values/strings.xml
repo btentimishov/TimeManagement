@@ -16,7 +16,7 @@
     <string name="quiz_title">Quiz Test</string>
     <string name="todo">ToDo: </string>
     <string name="until">Until: </string>
-    <string name="question_test" >8. Do you often find yourself doing things which interfere with your schoolwork simply because you hate to say "No" to people? *</string>
+    <string name="question_test">8. Do you often find yourself doing things which interfere with your schoolwork simply because you hate to say "No" to people? *</string>
     <string name="question_name">Question:</string>
     <string name="title">Title:</string>
     <string name="description">Description:</string>
@@ -49,4 +49,6 @@
         <item>17. When you have several things to do, do you think it is best to do a little bit of work on each one? </item>
         <item>18. Do you regularly review your class notes, even when a test is not imminent?</item>
     </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
