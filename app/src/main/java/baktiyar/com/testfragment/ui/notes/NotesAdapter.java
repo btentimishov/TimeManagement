@@ -23,7 +23,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteHolder> 
     private OnClickListener mListener;
 
     interface OnClickListener {
-        void onClick(Note note);
+        void onNoteClick(Note note);
     }
 
     public NotesAdapter(ArrayList<Note> notes, OnClickListener listener) {
@@ -34,8 +34,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteHolder> 
     @Override
     public NoteHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.note_item, parent, false);
-        NoteHolder holder = new NoteHolder(view);
-        return holder;
+        return new NoteHolder(view);
     }
 
     @Override
@@ -62,13 +61,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteHolder> 
 
         void bindNote(final Note note) {
             tvNoteTitle.setText(note.getTitle());
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mListener.onClick(note);
-                }
-
-            });
+            itemView.setOnClickListener(v -> mListener.onNoteClick(note));
             if (stringContainsNothing(note.getDoDate()) & stringContainsNothing(note.getDoTime())) {
                 clockLayout.setVisibility(View.GONE);
             } else {

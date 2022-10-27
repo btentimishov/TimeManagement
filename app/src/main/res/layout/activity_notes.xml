@@ -34,29 +34,21 @@
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <Button
-            android:id="@+id/btnBeginTest"
-            style="@style/BTN"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_8"
-            android:drawableRight="@drawable/ic_arrow"
-            android:padding="@dimen/margin_12"
-            android:text="@string/begin_test"
-            android:textStyle="bold" />
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:id="@+id/noteListLayout"
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/margin_12"
+                android:layout_marginStart="@dimen/margin_12"
                 android:layout_marginTop="@dimen/margin_8"
                 android:text="@string/tasks" />
 

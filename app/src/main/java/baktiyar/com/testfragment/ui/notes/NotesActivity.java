@@ -7,6 +7,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+
+import androidx.appcompat.content.res.AppCompatResources;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
@@ -31,7 +33,6 @@ public class NotesActivity extends AppCompatActivity implements View.OnClickList
     private RecyclerView mRvNoteList;
     private FloatingActionButton mFabAddNote;
     private LinearLayout mNoDataLayout, mNoteListLayout;
-    private Button mBtnBeginTest;
 
     private NotesAdapter mNotesAdapter;
     private ArrayList<Note> mNoteList;
@@ -55,11 +56,9 @@ public class NotesActivity extends AppCompatActivity implements View.OnClickList
     private void initActivity() {
         mRvNoteList = findViewById(R.id.rvNoteList);
         mFabAddNote = findViewById(R.id.fabAddNote);
-        mBtnBeginTest = findViewById(R.id.btnBeginTest);
         mNoDataLayout = findViewById(R.id.noData);
         mNoteListLayout = findViewById(R.id.noteListLayout);
         mFabAddNote.setOnClickListener(this);
-        mBtnBeginTest.setOnClickListener(this);
     }
 
     private void initPresenter() {
@@ -77,8 +76,10 @@ public class NotesActivity extends AppCompatActivity implements View.OnClickList
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void initToolbar(){
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setSubtitle("Todos: " + mNoteList.size());
-        actionBar.setIcon(getDrawable(R.drawable.ic_add));
+        if (actionBar != null) {
+            actionBar.setSubtitle("Todos: " + mNoteList.size());
+            actionBar.setIcon(AppCompatResources.getDrawable(getApplicationContext(), R.drawable.ic_add));
+        }
 
     }
     @Override
@@ -86,9 +87,6 @@ public class NotesActivity extends AppCompatActivity implements View.OnClickList
         if (v == mFabAddNote) {
             Intent intent = new Intent(this, CreateNoteActivity.class);
             intent.putExtra(ACTION_STATUS, ActionStatus.CREATE);
-            startActivity(intent);
-        } else if (v == mBtnBeginTest){
-            Intent intent = new Intent(this, QuizActivity.class);
             startActivity(intent);
         }
     }
@@ -104,7 +102,7 @@ public class NotesActivity extends AppCompatActivity implements View.OnClickList
     }
 
     @Override
-    public void onClick(Note note) {
+    public void onNoteClick(Note note) {
         Intent intent = new Intent(this, DetailedNoteActivity.class);
         intent.putExtra(PARCEL_NOTE, note);
         startActivity(intent);
