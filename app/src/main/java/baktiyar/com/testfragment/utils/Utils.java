@@ -17,18 +17,10 @@ public class Utils {
     }
 
     public static Boolean stringContainsNothing(String text) {
-        if (Objects.equals(text, "")) {
-            return true;
-        } else {
-            return false;
-        }
+        return Objects.equals(text, "");
     }
 
     public static Boolean stringIsNull(String text) {
-        if (text == null) {
-            return true;
-        } else {
-            return false;
-        }
+        return text == null;
     }
 }

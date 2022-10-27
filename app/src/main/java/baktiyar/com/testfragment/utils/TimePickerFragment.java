@@ -1,14 +1,11 @@
 package baktiyar.com.testfragment.utils;
 
-import android.annotation.SuppressLint;
-import android.annotation.TargetApi;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.RequiresApi;
-import android.support.v4.app.DialogFragment;
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.fragment.app.DialogFragment;
 import android.widget.TextView;
 import android.widget.TimePicker;
 

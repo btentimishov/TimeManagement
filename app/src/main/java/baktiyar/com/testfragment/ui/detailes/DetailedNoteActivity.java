@@ -2,8 +2,8 @@ package baktiyar.com.testfragment.ui.detailes;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -12,15 +12,12 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import java.util.Objects;
-
 import baktiyar.com.testfragment.R;
 import baktiyar.com.testfragment.model.Note;
 import baktiyar.com.testfragment.model.database.DatabaseHelper;
 import baktiyar.com.testfragment.ui.create_note.CreateNoteActivity;
 import baktiyar.com.testfragment.ui.notes.NotesActivity;
 import baktiyar.com.testfragment.utils.ActionStatus;
-import baktiyar.com.testfragment.utils.Utils;
 
 import static baktiyar.com.testfragment.utils.Utils.stringContainsNothing;
 

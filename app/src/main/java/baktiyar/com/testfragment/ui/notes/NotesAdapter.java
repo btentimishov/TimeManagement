@@ -1,6 +1,6 @@
 package baktiyar.com.testfragment.ui.notes;
 
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,11 +8,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 import baktiyar.com.testfragment.R;
 import baktiyar.com.testfragment.model.Note;
-import baktiyar.com.testfragment.utils.Utils;
 
 import static baktiyar.com.testfragment.utils.Utils.stringContainsNothing;
 

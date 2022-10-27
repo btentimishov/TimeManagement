@@ -1,8 +1,8 @@
 package baktiyar.com.testfragment.ui.create_note;
 
 import android.content.Intent;
-import android.support.design.widget.TextInputLayout;
-import android.support.v7.app.AppCompatActivity;
+import com.google.android.material.textfield.TextInputLayout;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,9 +19,7 @@ import baktiyar.com.testfragment.ui.notes.NotesActivity;
 import baktiyar.com.testfragment.utils.ActionStatus;
 import baktiyar.com.testfragment.utils.DatePickerFragment;
 import baktiyar.com.testfragment.utils.TimePickerFragment;
-import baktiyar.com.testfragment.utils.Utils;
 
-import static baktiyar.com.testfragment.utils.Utils.stringContainsNothing;
 import static baktiyar.com.testfragment.utils.Utils.stringIsNull;
 
 public class CreateNoteActivity extends AppCompatActivity implements View.OnClickListener {
