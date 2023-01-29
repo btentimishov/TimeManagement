@@ -1,5 +1,5 @@
 #.github/workflows/basic.yaml
-name: task - validate commit on master
+name: task - validate commit on kotlin_version
 on:
   push:
     branches: [ kotlin_version ]
